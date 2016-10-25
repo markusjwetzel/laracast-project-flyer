@@ -6,14 +6,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function testBasicExample()
+    /** @test */
+    public function it_shows_the_form_to_create_a_new_flyer()
     {
-        $this->visit('/')
-             ->see('Laravel');
+        $this->visit('flyers/create');
     }
 }
