@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Flyer;
-use App\Photo;
-use Illuminate\Http\Request;
 use App\Http\Requests\FlyerRequest;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FlyersController extends Controller
 {
 
+    /**
+     * Must be logged in to view all routes except show.
+     */
     public function __construct()
     {
         $this->middleware( 'auth', [ 'except' => ['show'] ] );

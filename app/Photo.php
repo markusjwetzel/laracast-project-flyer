@@ -2,6 +2,7 @@
 
 namespace App;
 
+use \File;
 use Illuminate\Database\Eloquent\Model;;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -48,10 +49,13 @@ class Photo extends Model
         $this->thumbnail_path = $this->baseDir() . '/tn-' . $name;
     }
 
-    
+    /**
+     * Deletes the photos from the server and the database.
+     * @return void
+     */
     public function delete()
     {
-        \File::delete([
+        File::delete([
             $this->path,
             $this->thumbnail_path
         ]);

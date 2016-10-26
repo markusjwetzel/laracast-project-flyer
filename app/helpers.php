@@ -21,7 +21,7 @@ function flash($title = null, $message = null)
 
 /**
  * The path to a given flyer.
- * @param  Flyer  $flyer
+ * @param  App\Flyer  $flyer
  * @return string
  */
 function flyer_path(Flyer $flyer)
@@ -29,6 +29,13 @@ function flyer_path(Flyer $flyer)
 	return $flyer->zip . '/' . str_replace( " ", "-", $flyer->street );
 }
 
+/**
+ * Helper for setting up simple forms.
+ * @param  string $body
+ * @param  string|object $path
+ * @param  string $type
+ * @return string
+ */
 function link_to($body, $path, $type)
 {
 	$csrf = csrf_field();

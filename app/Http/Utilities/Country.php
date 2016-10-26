@@ -4,6 +4,10 @@ namespace App\Http\Utilities;
 
 class Country {
 
+	/**
+	 * An assoicatve array countries and country codes.
+	 * @var array
+	 */
 	protected static $countries = [
 		"United States"                                => "us",
 		"Afghanistan"                                  => "af",
@@ -246,6 +250,10 @@ class Country {
 		"Zimbabwe"                                     => "zw"
 	];
 
+	/**
+	 * Returns the countries array.
+	 * @return array
+	 */
 	public static function all()
 	{
 		return static::$countries;

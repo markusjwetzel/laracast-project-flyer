@@ -26,14 +26,17 @@ class AddPhotoToFlyer {
 	/**
 	 * Create a new AddPhotoToFlyer form object
 	 * 
-	 * @param Flyer          $flyer
-	 * @param UploadedFile   $file
-	 * @param Thumbnail|null $thumbnail
+	 * @param App\Flyer $flyer
+	 * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+	 * @param App\Thumbnail|null $thumbnail
+	 * @return void
 	 */
 	public function __construct(Flyer $flyer, UploadedFile $file, Thumbnail $thumbnail = null)
 	{
 		$this->flyer = $flyer;
+
 		$this->file = $file;
+		
 		$this->thumbnail = $thumbnail ?: new Thumbnail;
 	}
 
@@ -54,11 +57,11 @@ class AddPhotoToFlyer {
 	/**
 	 * Make a new photo instance.
 	 * 
-	 * @return Photo
+	 * @return App\Photo
 	 */
 	protected function makePhoto()
 	{
-		return new Photo(['name' => $this->makeFileName()]);
+		return new Photo( [ 'name' => $this->makeFileName() ] );
 	}
 
 	/**
@@ -76,5 +79,4 @@ class AddPhotoToFlyer {
 
         return "{$name}.{$extension}";
 	}
-
 }

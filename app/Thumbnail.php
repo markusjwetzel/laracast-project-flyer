@@ -8,6 +8,8 @@ class Thumbnail {
 
     /**
      * Creates a thumbnail for the photo.
+     * @param  string $src
+     * @param  string $destination
      * @return void
      */
     public function make($src, $destination)

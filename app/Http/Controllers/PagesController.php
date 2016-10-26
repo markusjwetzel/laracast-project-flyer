@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class PagesController extends Controller
 {
+	/**
+	 * Display the Home page.
+	 * @return Responce
+	 */
     public function home()
     {
     	return view('pages.home');

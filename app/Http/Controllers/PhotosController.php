@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\AddPhotoToFlyer;
 use App\Flyer;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AddPhotoRequest;
 use App\Photo;
+use App\AddPhotoToFlyer;
+use App\Http\Requests\AddPhotoRequest;
 
 class PhotosController extends Controller
 {
@@ -25,6 +24,11 @@ class PhotosController extends Controller
         ( new AddPhotoToFlyer($flyer, $photo) )->save();
     }
 
+    /**
+     * Removes the photo from the database.
+     * @param  integer $id
+     * @return Responce
+     */
     public function destroy($id)
     {
         $photo = Photo::findOrFail($id)->delete();
