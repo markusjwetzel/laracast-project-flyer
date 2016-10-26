@@ -2,14 +2,13 @@
 
 namespace App;
 
-use \Image;
 use Illuminate\Database\Eloquent\Model;;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Photo extends Model
 {
     /**
-     * The associated table
+     * The associated table.
      * @var string
      */
 	protected $table = 'flyer_photos';
@@ -20,17 +19,8 @@ class Photo extends Model
      */
 	protected $fillable = ['path', 'thumbnail_path', 'name'];
 
-    protected $file;
-
-    protected static function boot()
-    {
-        static::creating( function( $photo ) {
-            return $photo->upload();
-        } );
-    }
-
     /**
-     * A photo belongs to a flyer
+     * A photo belongs to a flyer.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function flyer()
@@ -38,66 +28,34 @@ class Photo extends Model
     	return $this->belongsTo('App\Flyer');
     }
 
-    public static function fromFile(UploadedFile $file)
-    {
-        $photo = new static;
-
-        $photo->file = $file;
-
-        return $photo->fill([
-            'name' => $photo->fileName(),
-            'path' => $photo->filePath(),
-            'thumbnail_path' => $photo->thumbnailPath(),
-        ]);
-    }
-
-    public function fileName()
-    {
-        $name = sha1(
-            time() . $this->file->getClientOriginalName()
-        );
-
-        $extension = $this->file->getClientOriginalExtension();
-
-        return "{$name}.{$extension}";
-    }
-
-    public function filePath()
-    {
-        return $this->baseDir() . '/' . $this->fileName();
-    }
-
-    public function thumbnailPath()
-    {
-        return $this->baseDir() . '/tn-' . $this->fileName();
-    }
-
-    protected function baseDir()
+    /**
+     * The default upload directory for photos.
+     * @return string
+     */
+    public function baseDir()
     {
         return 'images/photos';
     }
 
     /**
-     * Move the photo to the proper folder.
-     * @return self
+     * Sets default attributes for file name and path.
+     * @param string $name
      */
-    public function upload()
+    public function setNameAttribute($name)
     {
-        $this->file->move( $this->baseDir(), $this->fileName() );
-
-        $this->makeThumbnail();
-
-        return $this;
+        $this->attributes['name'] = $name;
+        $this->path = $this->baseDir() . '/' . $name;
+        $this->thumbnail_path = $this->baseDir() . '/tn-' . $name;
     }
 
-    /**
-     * Creates a thumbnail for the photo.
-     * @return void
-     */
-    protected function makeThumbnail()
+    
+    public function delete()
     {
-        Image::make( $this->filePath() )
-            ->fit(200)
-            ->save( $this->thumbnailPath() );
+        \File::delete([
+            $this->path,
+            $this->thumbnail_path
+        ]);
+
+        parent::delete();
     }
 }

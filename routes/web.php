@@ -24,4 +24,6 @@ Route::post('register', 'Auth\RegisterController@register');
 
 Route::resource('flyers', 'FlyersController');
 Route::get('{zip}/{street}', 'FlyersController@show');
-Route::post('{zip}/{street}/photos', [ 'as' => 'store_photo_path', 'uses' => 'FlyersController@addPhoto' ] );
+Route::post('{zip}/{street}/photos', [ 'as' => 'store_photo_path', 'uses' => 'PhotosController@store' ] );
+
+Route::delete('photos/{id}', 'PhotosController@destroy');
